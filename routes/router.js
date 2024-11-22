@@ -226,6 +226,7 @@ router.get('/verify-token', userMiddleware.isLoggedIn, (req, res) => {
 
 //http://localhost:3000/api/add-post-article
 router.post('/add-post-article', userMiddleware.isLoggedIn, (req, res, next) => {
+    
     const db_tokenUser = ` SELECT * FROM homehavendb.user_log WHERE Status_Userlog = 'Khả Dụng' `;
     db.query(db_tokenUser, (err, result) => {
 
@@ -235,10 +236,10 @@ router.post('/add-post-article', userMiddleware.isLoggedIn, (req, res, next) => 
             });
         }
         if (result != undefined && result.length != 0) {
-            const { title, tenant, price, description, area, attachment, status_ID, city_ID } = req.body;
+            const { title, tenant, price, description, area, attachment, status_ID } = req.body;
             const db_list_article = `INSERT INTO homehavendb.post_article 
-                                        (User_ID , Title , Tenant , Price , Description , Area , Attachment , Status_ID , City_ID , Date_Begin) 
-                                        VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW() )`;
+                                        (User_ID , Title , Tenant , Price , Description , Area , Attachment , Status_ID  , Date_Begin) 
+                                        VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, NOW() )`;
 
             const values = [
                 result[0].User_ID,
@@ -248,11 +249,10 @@ router.post('/add-post-article', userMiddleware.isLoggedIn, (req, res, next) => 
                 description,
                 area,
                 attachment,
-                status_ID,
-                city_ID
+                status_ID
             ];
 
-            db.query(db_list_article, values, (listArticle_err, listArticle_result) => {
+            db.query(db_list_article,values, (listArticle_err, listArticle_result) => {
                 
                 if (listArticle_err != null) {
                     return res.status(409).send({
@@ -477,3 +477,4 @@ router.put('/update', userMiddleware.validateRegister, (req, res, next) => {
 });
 
 module.exports = router;
+////////////////////////////////////aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
