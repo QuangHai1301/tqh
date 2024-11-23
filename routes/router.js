@@ -474,6 +474,6 @@ router.put('/update', userMiddleware.validateRegister, (req, res, next) => {
             });
         }
     })
-});
+ });
 
 module.exports = router;
