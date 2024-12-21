@@ -548,7 +548,7 @@ router.get('/post-article', userMiddleware.isLoggedIn, (req, res, next) => {
 
 
 // http://localhost:19006/api/post-article //api đăng bài viết 
-router.post('/post-article', isLoggedIn, (req, res) => {
+router.post('/post-article', userMiddleware.isLoggedIn, (req, res) => {
     const { title, description, price, area, category, attachment, city, district } = req.body;
     const userID = req.userData.ID; // Giả sử bạn có middleware xác thực và lấy ID người dùng từ token
 
@@ -713,7 +713,7 @@ router.put('/update', userMiddleware.validateRegister, (req, res, next) => {
     })
  });
 // http://localhost:19006/api/delete-article
-router.delete('/delete-article/:articleId', isLoggedIn, (req, res) => {
+router.delete('/delete-article/:articleId', userMiddleware.isLoggedIn, (req, res) => {
     const articleId = req.params.articleId; // Lấy ID bài viết từ URL
     const userId = req.userData.ID; // Lấy ID người dùng từ token đã xác thực
 
@@ -763,7 +763,7 @@ router.delete('/delete-article/:articleId', isLoggedIn, (req, res) => {
 
 
 // http://localhost:19006/api/my-articles/
-router.get('/my-articles', isLoggedIn, (req, res, next) => {
+router.get('/my-articles', userMiddleware.isLoggedIn, (req, res, next) => {
     const userId = req.userData.ID; // Nhận ID người dùng từ token đã xác thực
     console.log("User ID from token:", userId); // Kiểm tra ID người dùng
 
@@ -871,7 +871,7 @@ router.get('/my-articles', isLoggedIn, (req, res, next) => {
 // });
 
 // http://localhost:19006/api/edit-article/:articleId
-router.put('/edit-article/:articleId', isLoggedIn, (req, res) => {
+router.put('/edit-article/:articleId', userMiddleware.isLoggedIn, (req, res) => {
     const articleId = req.params.articleId;
     const userID = req.userData.ID;
     const { Title, Description, Price, Area, Realty_Category_ID, Attachment, City_ID, District_ID } = req.body;
@@ -962,7 +962,7 @@ router.put('/edit-article/:articleId', isLoggedIn, (req, res) => {
 
 
 // http://localhost:19006/api/update-profile
-router.put('/update-profile', isLoggedIn, async (req, res) => {
+router.put('/update-profile', userMiddleware.isLoggedIn, async (req, res) => {
     const { UserName, Email, PhoneNumber, Password, ConfirmPassword } = req.body;
 
     // Log rõ ràng
@@ -1025,7 +1025,7 @@ router.put('/update-profile', isLoggedIn, async (req, res) => {
 });
 
 // http://localhost:19006/api/article-detail/:articleId
-router.get('/article-detail/:articleId', isLoggedIn, (req, res) => {
+router.get('/article-detail/:articleId', userMiddleware.isLoggedIn, (req, res) => {
     const articleId = req.params.articleId;
     const userId = req.userData.ID;
   
@@ -1181,7 +1181,7 @@ router.get('/article', (req, res) => {
 
 
 // http://localhost:19006/api/rental-request
-router.post('/rental-request', isLoggedIn, (req, res) => {
+router.post('/rental-request', userMiddleware.isLoggedIn, (req, res) => {
     const { productID, message } = req.body;
     const userID = req.userData.ID; // ID người thuê từ token
 
@@ -1219,7 +1219,7 @@ router.post('/rental-request', isLoggedIn, (req, res) => {
   
 
   // http://localhost:19006/api/notifications
-router.get('/notifications', isLoggedIn, (req, res) => {
+router.get('/notifications', userMiddleware.isLoggedIn, (req, res) => {
     const userId = req.userData.ID; // ID người dùng từ token
 
     const fetchNotificationsQuery = `
@@ -1255,7 +1255,7 @@ router.get('/notifications', isLoggedIn, (req, res) => {
 });
   
 // http://localhost:19006/api/delete-notification/:requestId
-router.delete('/delete-notification/:requestId', isLoggedIn, (req, res) => {
+router.delete('/delete-notification/:requestId', userMiddleware.isLoggedIn, (req, res) => {
     const requestId = req.params.requestId;
 
     const deleteRequestQuery = `
@@ -1284,7 +1284,7 @@ router.delete('/delete-notification/:requestId', isLoggedIn, (req, res) => {
 });
 
 // http://localhost:19006/api/approve-request/:id
-router.put('/approve-request/:id', isLoggedIn, (req, res) => {
+router.put('/approve-request/:id', userMiddleware.isLoggedIn, (req, res) => {
     const requestId = req.params.id; // ID yêu cầu cần phê duyệt
     const userId = req.userData.ID; // ID người dùng từ token xác thực
 
